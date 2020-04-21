@@ -37,6 +37,16 @@ const userSchema = mongoose.Schema({
     campus: {
         type: String
     },
+    //장바구니 관리
+    cart: {
+        type: Array,
+        default: []
+    },
+    // 구매내역 관리
+    history: {
+        type: Array,
+        default: []
+    },
     // 유효성 관리
     token: {
         type: String
@@ -44,6 +54,13 @@ const userSchema = mongoose.Schema({
     // 토큰 유효기간 설정
     tokenExp: {
         type: Number
+    },
+    email_verified: {
+        type: Boolean,
+        default: false
+    },
+    key_for_verify: {
+        type: String
     }
 });
 

@@ -1,5 +1,9 @@
-import React from 'react';
-import { Form, Input, Button } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Form, Input, Button, Row, Col, Typography, Select, Checkbox } from 'antd';
+import KaKaoAddress from 'components/Common/KaKaoAddress';
+import campusList from 'utils/Campus';
+import privacy from './Sections/Privacy';
+import service from './Sections/Service';
 // iPhone(320) S5(360) iPhone6/7/8/X(375) iPhone+(414) iPad(768) iPad-Pro(1024)
 // xs   <   sm   <   md   <   lg   <   xl   <   xxl
 //     576      768      992      1200     1600
@@ -28,74 +32,118 @@ const tailFormItemLayout = {
   },
 };
 
-const RegisterPage = (props) => (
-  <div style={{ display: 'flex', margin: 'auto' }}>
-    <Form hideRequiredMark={true} style={{ minWidth: '360px', display: 'flex', flexDirection: 'column' }} {...formItemLayout} onFinish={props.onSubmitHandler} >
-      <Form.Item name="name" required label="Name" labelAlign="left" hasFeedback>
-        <Input
-          id="name"
-          placeholder="Enter your name"
-          type="text"
-        />
-      </Form.Item>
-      <Form.Item name="id" required label="ID" labelAlign="left" hasFeedback>
-        <Input
-          id="id"
-          placeholder="Enter your ID"
-          type="text"
-        />
-      </Form.Item>
-      <Form.Item name="password" required label="Password" labelAlign="left" hasFeedback>
-        <Input
-          id="password"
-          placeholder="Enter your password"
-          type="password"
-        />
-      </Form.Item>
+const RegisterPage = (props) => {
 
-      <Form.Item name="confirmPassword" required label="Confirm" labelAlign="left" hasFeedback>
-        <Input
-          id="confirmPassword"
-          placeholder="Enter your confirmPassword"
-          type="password"
-        />
-      </Form.Item>
-      <Form.Item name="email" required label="Email" labelAlign="left" hasFeedback>
-        <Input
-          id="email"
-          placeholder="Enter your Email"
-          type="email"
-        />
-      </Form.Item>
-      <Form.Item name="phone" required label="Phone" labelAlign="left" hasFeedback>
-        <Input
-          id="phone"
-          placeholder="Enter your phone number"
-          type="text"
-        />
-      </Form.Item>
-      <Form.Item name="address" required label="Address" labelAlign="left" hasFeedback>
-        <Input
-          id="address"
-          placeholder="Enter your address"
-          type="text"
-        />
-      </Form.Item>
-      <Form.Item name="campus" required label="Campus" labelAlign="left" hasFeedback>
-        <Input
-          id="campus"
-          placeholder="Enter your Campus"
-          type="text"
-        />
-      </Form.Item>
-      
-      <Form.Item {...tailFormItemLayout}>
-        <Button htmlType="submit" style={{ minWidth: '100%' }} type="primary">
-          회원 가입
+  const [form] = Form.useForm();
+  const [Visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    form.setFieldsValue({
+      postcode: props.Postcode,
+      roadAddress: props.RoadAddress
+    })
+  }, [props.Postcode, props.RoadAddress]);
+
+  return (
+    <div style={{ minWidth: '360px', margin: '2rem auto' }}>
+      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        <Typography.Title level={2}>회원가입</Typography.Title>
+      </div>
+      <Form
+        form={form}
+        hideRequiredMark={true}
+        style={{ display: 'flex', flexDirection: 'column' }}
+        {...formItemLayout}
+        onFinish={props.onSubmitHandler}
+      >
+        <Form.Item name="name" required label="Name" labelAlign="left" hasFeedback>
+          <Input
+            id="name"
+            placeholder="Enter your name"
+            type="text"
+          />
+        </Form.Item>
+        <Form.Item name="id" required label="ID" labelAlign="left" hasFeedback>
+          <Input
+            id="id"
+            placeholder="Enter your ID"
+            type="text"
+          />
+        </Form.Item>
+        <Form.Item name="password" required label="Password" labelAlign="left" hasFeedback>
+          <Input
+            id="password"
+            placeholder="Enter your password"
+            type="password"
+          />
+        </Form.Item>
+
+        <Form.Item name="confirmPassword" required label="Confirm" labelAlign="left" hasFeedback>
+          <Input
+            id="confirmPassword"
+            placeholder="Enter your confirmPassword"
+            type="password"
+          />
+        </Form.Item>
+        <Form.Item name="campus" required label="Campus" labelAlign="left" hasFeedback>
+          <Select
+            showSearch
+            placeholder="Enter you campus"
+          >
+            {campusList.map((campus, index) =>
+              <Select.Option key={index} value={campus}>{campus}</Select.Option>
+            )}
+          </Select>
+        </Form.Item>
+        <Form.Item name="email" required label="Email" labelAlign="left" hasFeedback>
+          <Input
+            id="email"
+            placeholder="Enter your Email"
+            type="email"
+          />
+        </Form.Item>
+        <Form.Item name="phone" required label="Phone" labelAlign="left" hasFeedback>
+          <Input
+            id="phone"
+            placeholder="Enter your phone number"
+            type="text"
+          />
+        </Form.Item>
+        <Form.Item label="Address" labelAlign="left" style={{margin:'0'}}>
+          <Row>
+            <Col span={12} >
+              <Form.Item name="postcode">
+                <Input type="text" id="postcode" placeholder="우편번호" onClick={() => setVisible(true)} />
+              </Form.Item>
+            </Col>
+            <Col span={12} style={{ display: 'flex' }}>
+              <Button type="primary" onClick={() => setVisible(true)} style={{ marginLeft: 'auto' }} >
+                우편번호 찾기
+              </Button>
+            </Col>
+          </Row>
+          <KaKaoAddress Visible={Visible} setVisible={setVisible} setPostcode={props.setPostcode} setRoadAddress={props.setRoadAddress} />
+          <Form.Item name="roadAddress">
+            <Input type="text" id="roadAddress" placeholder="도로명주소" onClick={() => setVisible(true)} />
+          </Form.Item>
+          <Form.Item name="detailAddress">
+            <Input type="text" id="detailAddress" placeholder="상세주소" />
+          </Form.Item>
+        </Form.Item>
+        <Form.Item name="privacy" required valuePropName="checked" style={{margin:'0'}}>
+          <Checkbox><span style={{color:'#1890ff', paddingLeft:'1rem'}} onClick={privacy}>개인정보 제 3자 제공 동의 (필수)</span></Checkbox>
+        </Form.Item>
+        <Form.Item name="service" required valuePropName="checked">
+          <Checkbox><span style={{color:'#1890ff', paddingLeft:'1rem'}} onClick={service}>서비스 이용약관 동의 (필수)</span></Checkbox>
+        </Form.Item>
+        <Form.Item {...tailFormItemLayout}>
+          <Button htmlType="submit" style={{ minWidth: '100%' }} type="primary">
+            회원 가입
                 </Button>
-      </Form.Item>
-    </Form>
-  </div>
-);
+        </Form.Item>
+      </Form>
+    </div>
+  )
+};
 
 export default RegisterPage;

@@ -33,6 +33,10 @@ export default function (SpecificComponent, option, adminRoute = null) {
                         if(option === false) { // 로그인한 유저가 로그인하지 않은 페이지 접근 시 (회원가입, 로그인페이지...)
                             props.history.push('/');
                         }
+                        if(response.payload.email_verified === false){ // 이메일 미인증일 시
+                            alert("이메일 인증을 해주세요")
+                            props.history.push('/');
+                        }
                     }
                 }
             })

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, Typography } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 // xs   <   sm   <   md   <   lg   <   xl   <   xxl
@@ -9,7 +9,10 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const LoginPage = (props) => {
   return (
-    <div style={{ display: 'flex', margin: 'auto' }}>
+    <div style={{ margin: 'auto' }}>
+      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        <Typography.Title level={2}>로그인</Typography.Title>
+      </div>
       <Form initialValues={{ remember: true, id: props.id }} style={{ minWidth: '360px', display: 'flex', flexDirection: "column" }} onFinish={props.onSubmitHandler}>
         <Form.Item
           name="id"
