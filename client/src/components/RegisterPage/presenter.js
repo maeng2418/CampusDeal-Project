@@ -139,7 +139,7 @@ const RegisterPage = (props) => {
         <Form.Item {...tailFormItemLayout}>
           <Button htmlType="submit" style={{ minWidth: '100%' }} type="primary">
             회원 가입
-                </Button>
+          </Button>
         </Form.Item>
       </Form>
     </div>
