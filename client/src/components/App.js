@@ -8,7 +8,8 @@ import RegisterPage from 'components/RegisterPage';
 import NavBar from 'components/NavBar';
 import Footer from 'components/Footer';
 import UploadBookPage from 'components/UploadBookPage';
-import Test from 'components/Test';
+import BoardPage from 'components/BoardPage';
+import BookDetailPage from 'components/BookDetailPage';
 
 function App() {
   return (
@@ -20,7 +21,9 @@ function App() {
             <Route exact path="/login" component={Auth(LoginPage, false)}/>
             <Route exact path="/register" component={Auth(RegisterPage, false)}/>
             <Route exact path="/book/upload" component={Auth(UploadBookPage, true)}/>
-            <Route exact path="/test" component={Auth(Test, true)}/>
+            <Route exact path="/board" component={Auth(BoardPage, null)}/>
+            <Route exact path="/book/:bookId" component={Auth(BookDetailPage, null)}/>
+
           </Switch>
         </div>
         <Footer />

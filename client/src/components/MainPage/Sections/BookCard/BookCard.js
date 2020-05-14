@@ -2,7 +2,8 @@ import React from 'react';
 import { Col, Card } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import { Link } from 'react-router-dom';
-import ImageSlider from 'components/Common/ImageSlider/ImageSlider';
+import ImageSlider from 'components/Common/ImageSlider';
+import './BookCard.css';
 
 const BookCard = (props) => {
 
@@ -14,7 +15,7 @@ const BookCard = (props) => {
       >
         <Meta
           title={props.book.title}
-          description={`$${props.book.price}`}
+          description={`$${props.book.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
         />
       </Card>
     </Col>

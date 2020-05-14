@@ -2,6 +2,7 @@
     padding: 10px 20px 0 20px;
     display: flex;
     position: fixed;
+    padding-top: 1rem;
     z-index: 5;
     width: 100%;
     border-bottom: solid 1px #e8e8e8;
@@ -9,21 +10,17 @@
     box-shadow: 0 0 30px #f3f1f1;
     background-color: white;
     
-    .menuLogo{
-        width: 150px;
-
-    }
 
     .menuLogo a{
         display: inline-block;
-        font-size: 20px;
+        font-size: 2rem;
+        line-height: 1;
+        font-weight: 900;
         margin: auto 20px;
     }
 
-    .menuLeft{
-        
-    }
-    .menuRight{
+    .menuGroup{
+        display: flex;
         margin-left: auto;
     }
 

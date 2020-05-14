@@ -50,12 +50,23 @@ router.post('/uploadBook', (req, res) => {
 router.get('/getBooks', (req, res) => {
     Book.find()
         .populate('seller')
-        .limit(8)
+        // .limit(4)
         .exec((err, books) => {
             if (err) return res.status(400).send(err);
             res.status(200).json({ success: true, books});
         })
-})
+});
+
+router.get('/getBookDetail', function (req, res) {
+
+    Book.findOne({'_id' : req.query.id})
+    .populate('seller')
+    .exec((err, info) => {
+        if(err) return res.status(400).send(err);
+        res.status(200).json({ success: true, info});
+    })
+
+});
 
 
 

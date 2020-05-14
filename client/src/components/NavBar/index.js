@@ -19,12 +19,10 @@ const NavBar = () => {
   return (
     <nav className={styles.menuContainer}>
       <div className={styles.menuLogo}>
-        <a href="/" >Logo</a>
+        <a href="/">캠퍼스 딜</a>
       </div>
-      <div className={styles.menuLeft}>
+      <div className={styles.menuGroup}>
         <LeftMenu mode="horizontal" />
-      </div>
-      <div className={styles.menuRight}>
         <RightMenu mode="horizontal" />
       </div>
       <Button

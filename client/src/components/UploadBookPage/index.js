@@ -21,7 +21,7 @@ const formItemLayout = {
 
 const UploadBookPage = (props) => {
 
-  const [PulbishDate, setPulbishDate] = useState("");
+  const [PulbishDate, setPulbishDate] = useState(null);
   const [Images, setImages] = useState([]);
   const user = useSelector(state => state.user);
 
@@ -37,7 +37,7 @@ const UploadBookPage = (props) => {
 
   const onSubmitHandler = (data) => {
 
-    if (!data.title || !data.writer || !data.publisher || !data.publishDate || !data.grade || !data.price || !data.category || !data.methods) {
+    if (!data.title || !data.writer || !data.publisher || !PulbishDate || !data.grade || !data.price || !data.category || !data.methods) {
       return message.error('모든 입력폼을 입력해주세요.');
     }
 
@@ -52,7 +52,7 @@ const UploadBookPage = (props) => {
     formData.append('title', data.title)
     formData.append('writer', data.writer)
     formData.append('publisher', data.publisher)
-    formData.append('publishDate', data.publishDate)
+    formData.append('publishDate', PulbishDate)
     formData.append('grade', data.grade)
     formData.append('price', data.price)
     formData.append('category', data.category)
@@ -77,7 +77,7 @@ const UploadBookPage = (props) => {
       <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
         <Typography.Title level={2}>도서 판매 등록</Typography.Title>
       </div>
-      <Form style={{ display: 'flex' }} {...formItemLayout} hideRequiredMark={true} onFinish={onSubmitHandler}>
+      <Form style={{ display: 'flex' }} {...formItemLayout} autoComplete="off" hideRequiredMark={true} onFinish={onSubmitHandler}>
         <div style={{ width: '50%' }}>
           <Form.Item name="title" required label="교재명" labelAlign="left" hasFeedback>
             <Input

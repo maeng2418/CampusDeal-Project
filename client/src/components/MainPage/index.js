@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Select, Row } from 'antd';
+import { Row, Typography } from 'antd';
+import SearchBar from 'components/SearchBar';
 import BookCard from './Sections/BookCard/BookCard';
+import { withRouter } from 'react-router-dom';
 import Axios from 'axios';
 
 function MainPage(props) {
@@ -11,7 +13,6 @@ function MainPage(props) {
     Axios.get('/api/book/getBooks')
       .then(response => {
         if(response.data.success) {
-          console.log(response.data.books)
           setBooks(response.data.books);
         } else {
           alert("책 정보를 가져오는 데 실패하였습니다.");
@@ -19,27 +20,12 @@ function MainPage(props) {
       })
   }, []);
 
+
   return (
     <div style={{ width: '90%', margin: 'auto', display:'flex', flexDirection:'column' }}>
-        <Input.Group compact style={{textAlign:'center'}} >
-          <Select defaultValue="all" size="large" style={{ width: '10%' }}>
-            <Select.Option value="all">통합검색</Select.Option>
-            <Select.Option value="law">법학</Select.Option>
-            <Select.Option value="economics">경영/경제</Select.Option>
-            <Select.Option value="humanities">인문</Select.Option>
-            <Select.Option value="linguistics">어문</Select.Option>
-            <Select.Option value="sociology">사회과학</Select.Option>
-            <Select.Option value="science">자연과학</Select.Option>
-            <Select.Option value="engineering">공학</Select.Option>
-            <Select.Option value="education">사범</Select.Option>
-            <Select.Option value="life">생활환경</Select.Option>
-            <Select.Option value="art">예체능</Select.Option>
-            <Select.Option value="agriculture">농축산</Select.Option>
-            <Select.Option value="medical">의약학</Select.Option>
-          </Select>
-          <Input.Search size="large" style={{ width: '50%' }} onSearch={value => console.log(value)} enterButton />
-        </Input.Group>
-        <Row gutter={[16, 16]}>
+      <SearchBar/>
+        <Typography.Title level={2} style={{marginBottom:'2rem'}}><span style={{ borderBottom: '3px solid black', paddingBottom: '8px', paddingRight:'2px', fontWeight: 'bold', fontSize: '28px' }}>NEW</span></Typography.Title>
+        <Row gutter={[32, 16]}>
           {Books.map((book, index) => (
             <BookCard book={book} key={index} />
           ))}
@@ -48,4 +34,4 @@ function MainPage(props) {
   )
 }
 
-export default MainPage;
+export default withRouter(MainPage);
