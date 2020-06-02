@@ -1,15 +1,17 @@
 import axios from 'axios';
-import { USER_SERVER } from 'components/Config';
 import {
     LOGIN_USER,
     REGISTER_USER,
     LOGOUT_USER,
     AUTH_USER,
+    ADD_TO_CART_USER,
+    GET_CART_ITEMS_USER,
+    REMOVE_CART_ITEM_USER,
 } from './types';
 
 const loginUser = (dataTosubmit) => {
     dataTosubmit.remember ? localStorage.setItem('id', dataTosubmit.id) : localStorage.clear('id');
-    const request = axios.post(`${USER_SERVER}/login`, dataTosubmit)
+    const request = axios.post('/api/users/login', dataTosubmit)
     .then(response => response.data)
 
     return {
@@ -20,7 +22,7 @@ const loginUser = (dataTosubmit) => {
 
 const registerUser = (dataTosubmit) => {
     
-    const request = axios.post(`${USER_SERVER}/register`, dataTosubmit)
+    const request = axios.post('/api/users/register', dataTosubmit)
     .then(response => response.data)
 
     return {
@@ -31,7 +33,7 @@ const registerUser = (dataTosubmit) => {
 
 const logout = () => {
 
-    const request = axios.get(`${USER_SERVER}/logout`)
+    const request = axios.get('/api/users/logout')
         .then(response => response.data)
 
     return {
@@ -42,7 +44,7 @@ const logout = () => {
 
 const auth = () => {
 
-    const request = axios.get(`${USER_SERVER}/auth`)
+    const request = axios.get('/api/users/auth')
         .then(response => response.data)
 
     return {
@@ -51,11 +53,46 @@ const auth = () => {
     }
 }
 
+const addToCart = (_id) => {
+    const request = axios.get(`/api/users/addToCart?bookId=${_id}`)
+        .then(response => response.data);
+
+    return {
+        type: ADD_TO_CART_USER,
+        payload: request
+    }
+}
+
+export function getCartItems(cartItems) {
+    const request = axios.get(`/api/book/book_by_id?id=${cartItems}&type=array`) // type이 여러 개
+        .then(response => {
+        return response.data;
+    });
+
+    return {
+        type: GET_CART_ITEMS_USER, 
+        payload: request
+    }
+}
+
+export function removeFromCartItem(id) {
+    const request = axios.get(`/api/users/removeFromCart?_id=${id}`)
+    .then(response => {
+        return response.data;
+    });
+
+    return {
+        type: REMOVE_CART_ITEM_USER,
+        payload: request
+    }
+};
+
 const userActionCreators = {
     loginUser,
     registerUser,
     logout,
     auth,
+    addToCart,
 };
 
 export default userActionCreators;

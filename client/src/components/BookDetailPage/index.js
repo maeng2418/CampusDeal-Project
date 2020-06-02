@@ -30,7 +30,7 @@ const BookDetailPage = (props) => {
                         <Col lg={6} xs={24}>
                             <ImageSlider images={Book.images}/>
                         </Col>
-                        <Col lg={18} xs={24}>
+                        <Col lg={18} xs={24} style={{margin:'auto'}}>
                             <BookInfo detail={Book} />
                         </Col>
                     </Row>

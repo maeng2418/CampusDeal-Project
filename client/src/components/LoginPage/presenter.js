@@ -29,6 +29,7 @@ const LoginPage = (props) => {
             placeholder="Enter your ID"
             type="text"
             defaultValue={props.id}
+            size="large"
           />
         </Form.Item>
 
@@ -45,6 +46,7 @@ const LoginPage = (props) => {
             id="password"
             prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)', marginRight: '.5rem' }} />}
             placeholder="Enter your password"
+            size="large"
           />
         </Form.Item>
 
@@ -53,7 +55,7 @@ const LoginPage = (props) => {
         </Form.Item>
 
         <Form.Item >
-          <Button type="primary" htmlType="submit" className="login-form-button" style={{ minWidth: '100%' }}>
+          <Button type="primary" htmlType="submit" className="login-form-button" size="large" style={{ minWidth: '100%' }}>
             로그인
         </Button>
         </Form.Item>

@@ -10,6 +10,7 @@ import Footer from 'components/Footer';
 import UploadBookPage from 'components/UploadBookPage';
 import BoardPage from 'components/BoardPage';
 import BookDetailPage from 'components/BookDetailPage';
+import CartPage from 'components/CartPage';
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
             <Route exact path="/book/upload" component={Auth(UploadBookPage, true)}/>
             <Route exact path="/board" component={Auth(BoardPage, null)}/>
             <Route exact path="/book/:bookId" component={Auth(BookDetailPage, null)}/>
-
+            <Route exact path="/user/cart" component={Auth(CartPage, true)}/>
           </Switch>
         </div>
         <Footer />

@@ -68,6 +68,30 @@ router.get('/getBookDetail', function (req, res) {
 
 });
 
+router.get('/book_by_id', function (req, res) {
+
+    let type = req.query.type;
+    let bookIds = req.query.id;
+
+    if(type === "array") {
+        let ids = req.query.id.split(',');
+        bookIds = [];
+        bookIds = ids.map(item => {
+            return item
+        })
+
+    }
+
+    //we need to find the product information that belong to product Id
+    Book.find({'_id' : {$in: bookIds}}) // in은 배열 집어넣을 수 있음.
+    .populate('seller')
+    .exec((err, book) => {
+        if(err) return res.status(400).send(err);
+        return res.status(200).send(book); // send: 배열형식으로 보냄
+    })
+
+});
+
 
 
 module.exports = router;

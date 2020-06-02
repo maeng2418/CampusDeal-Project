@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const config = require('../config/key'); // mongoURI 가져오기
 const { User } = require('../models/User'); // 유저모델 가져오기
+const { Book } = require('../models/Book'); // 도서모델 가져오기
 const { auth } = require('../middleware/auth'); // auth 미들웨어 가져오기
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt'); // 비밀번호 암호화 하기
@@ -131,7 +132,9 @@ router.get('/auth', auth, (req, res) => { // auth라는 미들웨어 추가. 엔
         name: req.user.name,
         role: req.user.role,
         image: req.user.image,
-        email_verified: req.user.email_verified
+        email_verified: req.user.email_verified,
+        cart: req.user.cart,
+        history: req.user.history
 
     });
 });
@@ -143,6 +146,77 @@ router.get('/logout', auth, (req, res) => {
         if (err) return res.json({ success: false, err });
         return res.status(200).send({
             success: true
+        })
+    })
+})
+
+router.get('/addToCart', auth, (req, res) => {
+
+    User.findOne({ _id: req.user._id }, (err, userInfo) => {
+        let duplicate = false;
+
+        userInfo.cart.forEach((item) => {
+            if (item.id == req.query.bookId) {
+                duplicate = true;
+            }
+        })
+
+        // 이미 카트에 들어있다면 1증가
+        if (duplicate) {
+            if (err) return res.json({ success: false, err });
+            res.status(200).json({success: true, duplicate, cart: userInfo.cart})
+        } else {
+            User.findOneAndUpdate(
+                { _id: req.user._id },
+                {
+                    $push: {
+                        cart: {
+                            id: req.query.bookId,
+                            date: Date.now()
+                        }
+                    }
+                },
+                { new: true },
+                (err, userInfo) => {
+                    if (err) return res.json({ success: false, err });
+                    res.status(200).json({success:true, duplicate, cart: userInfo.cart})
+                }
+            )
+        }
+    })
+});
+
+router.get('/removeFromCart', auth, (req, res) => {
+    
+    User.findOneAndUpdate({_id: req.user._id}, {"$pull": {"cart": {"id": req.query._id}}}, {new: true}, (err, userInfo) => {
+        let cart = userInfo.cart;
+        let array = cart.map(item => {
+            return item.id
+        })
+
+        Book.find({'_id' : { $in: array }})
+        .populate('seller')
+        .exec((err, cartDetail) => {
+            return res.status(200).json({
+                cartDetail,
+                cart
+            })
+        })
+    })
+});
+
+router.get('/userCartInfo', auth, (req, res) => {
+    User.findOne({_id: req.user._id}, (err, userInfo) => {
+        let cart = userInfo.cart;
+        let array = cart.map(item => {
+            return item.id
+        })
+
+        Book.find({'_id': {$in: array}})
+        .populate('seller')
+        .exec((err, cartDetail) => {
+            if (err) return res.status(400).send(err);
+            res.status(200).json({success:true, cartDetail, cart}); 
         })
     })
 })

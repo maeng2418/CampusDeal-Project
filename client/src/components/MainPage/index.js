@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Typography } from 'antd';
+import { Row, Col, Typography } from 'antd';
 import SearchBar from 'components/SearchBar';
 import BookCard from './Sections/BookCard/BookCard';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Axios from 'axios';
+import Notice from './Sections/Notice';
+import QnA from './Sections/QnA';
 
 function MainPage(props) {
 
@@ -30,6 +32,20 @@ function MainPage(props) {
             <BookCard book={book} key={index} />
           ))}
         </Row>
+        <Row style={{marginBottom:'2rem'}}>
+        <Col lg={12} xs={24}>
+          <div style={{ margin: '2.5em 0 1rem 2rem' }}>
+            <Link to='/notice/board'><Typography.Title level={3} style={{ letterSpacing: '-0.1rem'}}>공지사항</Typography.Title></Link>
+          </div>
+          <Notice />
+        </Col>
+        <Col lg={12} xs={24}>
+          <div style={{ margin: '2.5rem 0 1rem 2rem' }}>
+          <Link to='/contact/board'><Typography.Title level={3} style={{ letterSpacing: '-0.1rem'}}>문의사항</Typography.Title></Link>
+          </div>
+          <QnA />
+        </Col>
+      </Row>
     </div>
   )
 }

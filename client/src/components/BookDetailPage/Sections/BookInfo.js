@@ -1,9 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import { Button, Descriptions } from 'antd';
+import { Button, Descriptions, message } from 'antd';
+import { useDispatch } from 'react-redux';
+import userActionCreators from 'redux/actions/user_action';
+
+message.config({
+  top: 100,
+  duration: 5
+});
 
 const BookInfo = (props) => {
 
   const [Methods, setMethods] = useState("");
+  const dispatch = useDispatch();
 
   const method_ko = {
     "safe" : "안전거래",
@@ -13,12 +21,27 @@ const BookInfo = (props) => {
   }
 
   useEffect(() => {
-    let method = ""
+    let method = [];
     props.detail.methods.forEach((item) => {
-      method += method_ko[item]+", ";
+      method.push(method_ko[item])
     })
-    setMethods(method.substring(0, method.length-2));
+    setMethods(method.join(', '));
   }, []);
+
+  const addToCart = () => {
+    dispatch(userActionCreators.addToCart(props.detail._id))
+    .then(response => {
+      if(response.payload.success) {
+        if(response.payload.duplicate) {
+          message.success("이미 장바구니에 담겨있습니다.")
+        } else {
+          message.success("장바구니에 담겼습니다.")
+        }
+      } else {
+        message.error("장바구니에 담기를 실패하였습니다.")
+      }
+    })
+  }
 
     return (
         <div>
@@ -37,10 +60,10 @@ const BookInfo = (props) => {
             <br />
 
             <div style={{ display:'flex', justifyContent:'center' }}>
-            <Button size="large" shape="round" type="primary" style={{marginRight:'2rem'}} onClick>
+            <Button size="large" shape="round" type="primary" style={{marginRight:'2rem'}} onClick={addToCart}>
                     장바구니
             </Button>
-                <Button size="large" shape="round" type="danger" onClick>
+            <Button size="large" shape="round" type="danger" onClick>
                     구매하기
             </Button>
             </div>
