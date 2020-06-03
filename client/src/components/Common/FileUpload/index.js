@@ -1,5 +1,5 @@
 import React from 'react';
-import { Upload, message } from 'antd';
+import { Upload } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 
 const { Dragger } = Upload;
@@ -12,10 +12,7 @@ const FileUpload = (props) => {
                     <InboxOutlined />
                 </p>
                 <p className="ant-upload-text">Click or drag images to this area to upload</p>
-                <p className="ant-upload-hint">
-                    Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-                    band files
-      </p>
+                <p className="ant-upload-hint">교재 이미지 파일을 업로드 합니다.</p>
             </Dragger>
         </React.Fragment>
     );

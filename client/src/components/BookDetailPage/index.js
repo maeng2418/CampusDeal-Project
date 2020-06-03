@@ -27,10 +27,10 @@ const BookDetailPage = (props) => {
                 <React.Fragment>
                     <Typography.Title level={2}><span style={{ borderBottom: '3px solid #868686', paddingBottom: '8px', fontWeight: 'bold', fontSize: '28px' }}>{Book.title}</span></Typography.Title>
                     <Row gutter={[32, 16]} style={{marginTop:'2rem'}}>
-                        <Col lg={6} xs={24}>
-                            <ImageSlider images={Book.images}/>
+                        <Col lg={6} xs={24} style={{display:'flex', flexDirection:'column'}}>
+                            <div style={{margin:'auto 0'}}><ImageSlider images={Book.images}/></div>
                         </Col>
-                        <Col lg={18} xs={24} style={{margin:'auto'}}>
+                        <Col lg={18} xs={24}>
                             <BookInfo detail={Book} />
                         </Col>
                     </Row>

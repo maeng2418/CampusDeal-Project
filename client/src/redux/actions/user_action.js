@@ -9,51 +9,51 @@ import {
     REMOVE_CART_ITEM_USER,
 } from './types';
 
-const loginUser = (dataTosubmit) => {
+export function loginUser (dataTosubmit) {
     dataTosubmit.remember ? localStorage.setItem('id', dataTosubmit.id) : localStorage.clear('id');
     const request = axios.post('/api/users/login', dataTosubmit)
-    .then(response => response.data)
+    .then(response => response.data);
 
     return {
         type: LOGIN_USER,
         payload: request
-    }
+    };
 }
 
-const registerUser = (dataTosubmit) => {
+export function registerUser (dataTosubmit) {
     
     const request = axios.post('/api/users/register', dataTosubmit)
-    .then(response => response.data)
+    .then(response => response.data);
 
     return {
         type: REGISTER_USER,
         payload: request
-    }
-}
+    };
+};
 
-const logout = () => {
+export function logout () {
 
     const request = axios.get('/api/users/logout')
-        .then(response => response.data)
+        .then(response => response.data);
 
     return {
         type: LOGOUT_USER,
         payload: request
-    }
-}
+    };
+};
 
-const auth = () => {
+export function auth () {
 
     const request = axios.get('/api/users/auth')
-        .then(response => response.data)
+        .then(response => response.data);
 
     return {
         type: AUTH_USER,
         payload: request
-    }
-}
+    };
+};
 
-const addToCart = (_id) => {
+export function addToCart (_id) {
     const request = axios.get(`/api/users/addToCart?bookId=${_id}`)
         .then(response => response.data);
 
@@ -86,13 +86,3 @@ export function removeFromCartItem(id) {
         payload: request
     }
 };
-
-const userActionCreators = {
-    loginUser,
-    registerUser,
-    logout,
-    auth,
-    addToCart,
-};
-
-export default userActionCreators;

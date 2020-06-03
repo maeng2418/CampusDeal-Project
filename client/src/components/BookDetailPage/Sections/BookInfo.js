@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Button, Descriptions, message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import userActionCreators from 'redux/actions/user_action';
+import { addToCart } from 'redux/actions/user_action';
 import LikeDislike from './LikeDislike';
 import './BookInfo.css'
 
@@ -32,7 +32,7 @@ const BookInfo = (props) => {
   }, []);
 
   const addToCart = () => {
-    dispatch(userActionCreators.addToCart(props.detail._id))
+    dispatch(addToCart(props.detail._id))
     .then(response => {
       if(response.payload.success) {
         if(response.payload.duplicate) {

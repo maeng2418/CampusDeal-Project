@@ -48,10 +48,13 @@ router.post('/uploadBook', (req, res) => {
 });
 
 router.get('/getBooks', (req, res) => {
+    let limit = parseInt(req.query.limit);
     Book.find()
         .populate('seller')
-        // .limit(4)
+        .sort([["createdAt", "desc"]])
+        .limit(limit)
         .exec((err, books) => {
+            console.log(limit)
             if (err) return res.status(400).send(err);
             res.status(200).json({ success: true, books});
         })

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Typography } from 'antd';
 import SearchBar from 'components/SearchBar';
-import BookCard from './Sections/BookCard/BookCard';
+import BookCard from './Sections/BookCard';
 import { withRouter, Link } from 'react-router-dom';
 import Axios from 'axios';
 import Notice from './Sections/Notice';
@@ -12,7 +12,7 @@ function MainPage(props) {
   const [Books, setBooks] = useState([]);
 
   useEffect(() => {
-    Axios.get('/api/book/getBooks')
+    Axios.get('/api/book/getBooks?limit=4')
       .then(response => {
         if(response.data.success) {
           setBooks(response.data.books);

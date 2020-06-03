@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import userActionCreators from 'redux/actions/user_action';
+import { auth } from 'redux/actions/user_action';
 
 export default function (SpecificComponent, option, adminRoute = null) {
 
@@ -17,7 +17,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
         const dispatch = useDispatch();
 
         useEffect(() => {
-            dispatch(userActionCreators.auth())
+            dispatch(auth())
             .then(response => {
                 // 로그인 하지 않은 상태
                 if(!response.payload.isAuth) {
