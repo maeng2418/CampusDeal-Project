@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { Button, Descriptions, message } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import userActionCreators from 'redux/actions/user_action';
+import LikeDislike from './LikeDislike';
+import './BookInfo.css'
 
 message.config({
   top: 100,
@@ -12,6 +14,7 @@ const BookInfo = (props) => {
 
   const [Methods, setMethods] = useState("");
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
 
   const method_ko = {
     "safe" : "안전거래",
@@ -45,9 +48,10 @@ const BookInfo = (props) => {
 
     return (
         <div>
-            <Descriptions title="판매정보" bordered>
-                <Descriptions.Item label="판매자">{props.detail.seller.name}</Descriptions.Item>
-                <Descriptions.Item label="대학교">{props.detail.seller.campus}</Descriptions.Item>
+            <Descriptions title={<div>판매정보</div>} bordered>
+                <Descriptions.Item label="판매자" span={2} className="seller">{props.detail.seller.name}</Descriptions.Item>
+                <Descriptions.Item ><LikeDislike sellerId={props.detail.seller._id} userId={user.userData._id}/></Descriptions.Item>
+                <Descriptions.Item label="대학교" span={3}>{props.detail.seller.campus}</Descriptions.Item>
                 <Descriptions.Item label="분류">{props.detail.category}</Descriptions.Item>
                 <Descriptions.Item label="지은이">{props.detail.writer}</Descriptions.Item>
                 <Descriptions.Item label="출판사">{props.detail.publisher}</Descriptions.Item>
