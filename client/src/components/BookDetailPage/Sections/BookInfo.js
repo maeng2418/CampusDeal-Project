@@ -31,7 +31,7 @@ const BookInfo = (props) => {
     setMethods(method.join(', '));
   }, []);
 
-  const addToCart = () => {
+  const addToCartHandler = () => {
     dispatch(addToCart(props.detail._id))
     .then(response => {
       if(response.payload.success) {
@@ -64,7 +64,7 @@ const BookInfo = (props) => {
             <br />
 
             <div style={{ display:'flex', justifyContent:'center' }}>
-            <Button size="large" shape="round" type="primary" style={{marginRight:'2rem'}} onClick={addToCart}>
+            <Button size="large" shape="round" type="primary" style={{marginRight:'2rem'}} onClick={addToCartHandler}>
                     장바구니
             </Button>
             <Button size="large" shape="round" type="danger" onClick>

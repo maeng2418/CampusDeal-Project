@@ -49,15 +49,40 @@ router.post('/uploadBook', (req, res) => {
 
 router.get('/getBooks', (req, res) => {
     let limit = parseInt(req.query.limit);
-    Book.find()
-        .populate('seller')
-        .sort([["createdAt", "desc"]])
-        .limit(limit)
-        .exec((err, books) => {
-            console.log(limit)
-            if (err) return res.status(400).send(err);
-            res.status(200).json({ success: true, books});
-        })
+    let category = req.query.category ? req.query.category : {};
+    let search = req.query.search;
+
+    if (search) {
+        Book.find(category)
+            .find({$text:{$search: search}}) // 몽고디비
+            .populate('seller')
+            .sort([["createdAt", "desc"]])
+            .limit(limit)
+            .exec((err, books) => {
+                if (err) return res.status(400).send(err);
+                res.status(200).json({ success: true, books});
+            })
+
+    } else {
+        Book.find(category)
+            .populate('seller')
+            .sort([["createdAt", "desc"]])
+            .limit(limit)
+            .exec((err, books) => {
+                if (err) return res.status(400).send(err);
+                res.status(200).json({ success: true, books});
+            })
+    }
+
+    // Book.find()
+    //     .populate('seller')
+    //     .sort([["createdAt", "desc"]])
+    //     .limit(limit)
+    //     .exec((err, books) => {
+    //         console.log(limit)
+    //         if (err) return res.status(400).send(err);
+    //         res.status(200).json({ success: true, books});
+    //     })
 });
 
 router.get('/getBookDetail', function (req, res) {

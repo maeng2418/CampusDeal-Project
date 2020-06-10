@@ -27,7 +27,7 @@ function MainPage(props) {
                 <Select.Option value="agriculture">농축산</Select.Option>
                 <Select.Option value="medical">의약학</Select.Option>
             </Select>
-            <Input.Search size="large" style={{ width: '50%' }} enterButton onSearch={value => onSearchHandler(value)} enterButton />
+            <Input.Search size="large" style={{ width: '50%' }} enterButton onSearch={value => onSearchHandler(value)} />
         </Input.Group>
     )
 }
