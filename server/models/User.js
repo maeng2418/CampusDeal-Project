@@ -62,7 +62,7 @@ const userSchema = mongoose.Schema({
     key_for_verify: {
         type: String
     }
-});
+}, { timestamps: { currentTime: () => Date.now() + 3600000 * 9 } });
 
 // 정보들을 유저모델을 저장하기 전에 실행해줌.
 userSchema.pre('save', function( next ){

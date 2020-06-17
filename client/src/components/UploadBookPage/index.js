@@ -66,6 +66,15 @@ const UploadBookPage = (props) => {
       .then(response => {
         if (response.data.success) {
           message.success('교재등록에 성공하였습니다.', 0.7);
+
+          Axios.post('/api/chat/makeRoom', {_id: response.data.bookInfo._id, title: data.title, seller: user.userData._id})
+          .then(response => {
+            if (response.data.success) {
+              message.success("채팅방이 정상등록되었습니다.")
+            } else {
+              message.error("채팅방 생성에 실패하였습니다.")
+            }
+          })
           props.history.push('/');
         } else {
           message.error("교재 등록에 실패하였습니다.")

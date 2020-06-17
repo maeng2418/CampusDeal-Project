@@ -11,7 +11,7 @@ const dislikeSchema = mongoose.Schema({
         ref: 'User'
     }
 
-}, { timestamps: true })
+}, { timestamps: { currentTime: () => Date.now() + 3600000 * 9 } });
 
 
 const Dislike = mongoose.model('Dislike', dislikeSchema);

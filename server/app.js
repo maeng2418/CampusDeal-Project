@@ -7,6 +7,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var bookRouter = require('./routes/book');
 var likeRouter = require('./routes/like');
+var chatRouter = require('./routes/chat');
 
 var app = express();
 
@@ -18,11 +19,14 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 // aplication/json
 app.use(bodyParser.json());
+// socket.io
+app.io = require('socket.io')();
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/book', bookRouter);
 app.use('/uploads', express.static('uploads')); // 업로드 폴더에 있는 정적자료를 가져오기 위함.
 app.use('/api/like', likeRouter);
+app.use('/api/chat', chatRouter(app.io));
 
 module.exports = app;

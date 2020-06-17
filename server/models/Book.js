@@ -37,7 +37,7 @@ const bookSchema = mongoose.Schema({
         type: Array,
         default: []
     },
-}, { timestamps: true })
+}, { timestamps: { currentTime: () => Date.now() + 3600000 * 9 } });
 
 bookSchema.index(
     {

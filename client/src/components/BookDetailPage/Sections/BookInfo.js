@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { Button, Descriptions, message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from 'redux/actions/user_action';
@@ -46,6 +47,10 @@ const BookInfo = (props) => {
     })
   }
 
+  const buyHandler = () => {
+    props.history.push(`/chat/${props.detail._id}`);
+  }
+
     return (
         <div>
             <Descriptions title={<div>판매정보</div>} bordered>
@@ -67,7 +72,7 @@ const BookInfo = (props) => {
             <Button size="large" shape="round" type="primary" style={{marginRight:'2rem'}} onClick={addToCartHandler}>
                     장바구니
             </Button>
-            <Button size="large" shape="round" type="danger" onClick>
+            <Button size="large" shape="round" type="danger" onClick={buyHandler}>
                     구매하기
             </Button>
             </div>
@@ -76,4 +81,4 @@ const BookInfo = (props) => {
     );
 }
 
-export default BookInfo;
+export default withRouter(BookInfo);

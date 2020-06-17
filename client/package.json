@@ -12,6 +12,7 @@
     "node-sass": "^4.13.1",
     "query-string": "^6.12.1",
     "react": "^16.13.1",
+    "react-app-polyfill": "^1.0.6",
     "react-daum-postcode": "^1.8.4",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
@@ -20,7 +21,8 @@
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
     "redux-promise": "^0.6.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "socket.io-client": "^2.3.0"
   },
   "scripts": {
     "start": "cross-env NODE_PATH=src react-app-rewired start",
@@ -39,6 +41,7 @@
       "not op_mini all"
     ],
     "development": [
+      ">0.2%",
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
